@@ -6,6 +6,10 @@ import cors from "cors";
 import models from "./models/index.js";
 import connectDB from "./config/connectDB.js";
 
+import authRoutes from "./routes/auth.js";
+import studentRoutes from "./routes/student.js";
+import teacherRoutes from "./routes/teacher.js";
+
 // import authRoutes from "./routes/auth.js";
 // import studentRoutes from "./routes/students.js";
 // import teacherRoutes from "./routes/teachers.js";
@@ -31,6 +35,10 @@ app.use(
     credentials: true,
   })
 );
+
+app.use("/api/auth", authRoutes);
+app.use("/api/student", studentRoutes);
+app.use("/api/teacher", teacherRoutes);
 
 // app.use("/api/auth", authRoutes);
 // app.use("/api/students", studentRoutes);

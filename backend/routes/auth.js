@@ -1,35 +1,36 @@
 import express from "express";
-import models from "../models/index.js";
-import bcrypt from "bcrypt";
-
+import User from "../models/User.js";
+import jwt from "jsonwebtoken";
 const router = express.Router();
 
-const userTypes = [
-  { model: models.Student, role: "student" },
-  { model: models.Teacher, role: "teacher" },
-  { model: models.Admin, role: "admin" },
-];
+const JWT_SECRET = process.env.JWT_SECRET;
 
-router.post("/login", async (req, res) => {
-  const { username, password, role } = req.body;
-  const userType = userTypes.find((u) => u.role === role);
-  if (!userType) return res.status(400).json({ error: "Invalid role" });
+router.post("/register", async (req, res) => {
+  try {
+    const { name, username, password, role, roll_no } = req.body;
 
-  const user = await userType.model.findOne(
-    role === "student" ? { roll_no: username } : { username }
-  );
-  if (!user) return res.status(400).json({ error: "User not found" });
+    const user = new User({ name, username, password, role, roll_no });
+    await user.save();
 
-  const match = await bcrypt.compare(password, user.password);
-  if (!match) return res.status(400).json({ error: "Invalid password" });
-
-  req.session.user = { id: user._id, role, name: user.name };
-  res.json({ message: "Login successful", user: req.session.user });
+    res.status(201).json({ message: "User registered" });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
 });
 
-router.post("/logout", (req, res) => {
-  req.session.destroy();
-  res.json({ message: "Logged out" });
+// Login
+router.post("/login", async (req, res) => {
+  const { username, password } = req.body;
+
+  const user = await User.findOne({ username });
+  if (!user || !(await user.comparePassword(password)))
+    return res.status(401).json({ error: "Invalid credentials" });
+
+  const token = jwt.sign({ id: user._id, role: user.role }, JWT_SECRET, {
+    expiresIn: "1d",
+  });
+
+  res.json({ token, role: user.role });
 });
 
 export default router;
