@@ -56,7 +56,6 @@ const OSModuleSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-console.log(Module);
 const OSModule = Module.discriminator("OSmodule", OSModuleSchema);
 
 export default OSModule;

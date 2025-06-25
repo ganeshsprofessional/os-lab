@@ -9,7 +9,11 @@ const OSLabEnrollmentSchema = new mongoose.Schema({
         ref: "OSModule",
         required: true,
       },
-      hasCompleted: { type: Boolean, default: false },
+      status: {
+        type: String,
+        enum: ["not-started", "in-progress", "completed"],
+        default: "not-started",
+      },
       marksObtained: { type: Number, default: 0 },
     },
   ],

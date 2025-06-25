@@ -14,9 +14,10 @@ const baseLabSchema = new mongoose.Schema(
   { timestamps: true, discriminatorKey: "labType" } // Key to differentiate
 );
 
-// baseLabSchema.pre("save", async () => {
-//   const course = await Course.findOne({ _id: this.course_id });
-//   this.labType = course.labType + "lab";
-// });
+baseLabSchema.pre("save", async function (next) {
+  const course = await Course.findOne({ _id: this.course_id });
+  this.labType = course.labType + "lab";
+  next();
+});
 
 export default mongoose.model("Lab", baseLabSchema);
