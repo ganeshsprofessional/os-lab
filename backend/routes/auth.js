@@ -1,6 +1,7 @@
 import express from "express";
 import User from "../models/User.js";
 import jwt from "jsonwebtoken";
+import { authMiddleware } from "../middleware/auth.js";
 const router = express.Router();
 
 const JWT_SECRET = process.env.JWT_SECRET;
@@ -23,6 +24,7 @@ router.post("/login", async (req, res) => {
   const { username, password } = req.body;
 
   const user = await User.findOne({ username });
+  console.log(user, username, password);
   if (!user || !(await user.comparePassword(password)))
     return res.status(401).json({ error: "Invalid credentials" });
 
@@ -31,6 +33,10 @@ router.post("/login", async (req, res) => {
   });
 
   res.json({ token, role: user.role });
+});
+
+router.get("/check", authMiddleware, (req, res) => {
+  res.status(200).json({ message: "still logged in" });
 });
 
 export default router;

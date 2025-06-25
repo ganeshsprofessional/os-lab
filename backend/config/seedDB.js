@@ -7,6 +7,7 @@ import Lab from "../models/Lab.js";
 import OSModule from "../models/OSModule.js";
 import Module from "../models/OSModule.js";
 import LabEnrollment from "../models/LabEnrollment.js";
+import OSLab from "../models/OSLab.js";
 
 dotenv.config();
 
@@ -102,7 +103,8 @@ async function seedDB() {
     const osCourse = courses.find((c) => c.labType === "OS");
 
     // Create OS Lab
-    const osLab = await Lab.create({
+    const osLab = await OSLab.create({
+      lab_name: "OS LAB N",
       course_id: osCourse._id,
       semester: 6,
       teachers: [teachers[0]._id],
@@ -149,6 +151,7 @@ async function seedDB() {
     });
 
     osLab.modules = [osModule._id];
+    console.log(osLab);
     await osLab.save();
 
     console.log("Seeding complete!");

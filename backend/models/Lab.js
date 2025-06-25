@@ -5,6 +5,7 @@ const LABS = process.env.LABS.trim().split(/\s+/);
 
 const baseLabSchema = new mongoose.Schema(
   {
+    lab_name: { type: String, required: true, unique: true },
     course_id: { type: mongoose.Types.ObjectId, ref: "Course", required: true },
     semester: { type: Number },
     teachers: [{ type: mongoose.Types.ObjectId, ref: "User", required: true }],
