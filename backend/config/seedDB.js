@@ -27,7 +27,7 @@ async function seedDB() {
     // const password = await bcrypt.hash("password123", SALT_ROUNDS);
     const password = "password";
 
-    const students = await User.insertMany([
+    const studentsD = [
       {
         name: "Alice",
         username: "alice",
@@ -56,9 +56,9 @@ async function seedDB() {
         role: "student",
         roll_no: "S004",
       },
-    ]);
+    ];
 
-    const teachers = await User.insertMany([
+    const teachersD = [
       {
         name: "Prof. John",
         username: "john",
@@ -66,10 +66,9 @@ async function seedDB() {
         role: "teacher",
       },
       { name: "Prof. Smith", username: "smith", password, role: "teacher" },
-    ]);
+    ];
 
-    // Create Courses
-    const courses = await Course.insertMany([
+    const coursesD = [
       {
         title: "Operating Systems",
         code: "OS101",
@@ -94,7 +93,11 @@ async function seedDB() {
         description: "Programming Lab Course",
         labType: "PROG",
       },
-    ]);
+    ];
+
+    const students = await Promise.all(studentsD.map((s) => User.create(s)));
+    const teachers = await Promise.all(teachersD.map((t) => User.create(t)));
+    const courses = await Promise.all(coursesD.map((c) => Course.create(c)));
 
     const osCourse = courses.find((c) => c.labType === "OS");
 
@@ -104,24 +107,20 @@ async function seedDB() {
       semester: 6,
       teachers: [teachers[0]._id],
       students: [students[0]._id, students[1]._id],
-      labType: "OSlab",
     });
 
-    // Enroll Students in OS Lab
-    await LabEnrollment.insertMany([
+    const labEnrollmentD = [
       {
         lab_id: osLab._id,
         student_id: students[0]._id,
-        labType: "OSlabEnrollment",
-        status: "not-started",
       },
       {
         lab_id: osLab._id,
         student_id: students[1]._id,
-        labType: "OSlabEnrollment",
-        status: "not-started",
       },
-    ]);
+    ];
+
+    labEnrollmentD.forEach((le) => LabEnrollment.create(le));
 
     // Add OS Module to OS Lab
     const osModule = await OSModule.create({
@@ -149,7 +148,6 @@ async function seedDB() {
       ],
     });
 
-    // Attach Module to Lab
     osLab.modules = [osModule._id];
     await osLab.save();
 
