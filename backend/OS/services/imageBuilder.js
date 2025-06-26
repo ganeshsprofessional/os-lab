@@ -20,6 +20,7 @@ export async function buildModuleImage(moduleId, moduleData) {
   try {
     console.log("building");
     sendLog("Build process started...");
+    console.log(moduleData);
     const dockerfileContent = generateDockerfile(moduleData);
     sendLog("Dockerfile generated:\n---\n" + dockerfileContent + "---\n");
 

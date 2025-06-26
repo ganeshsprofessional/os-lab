@@ -130,7 +130,7 @@ async function seedDB() {
     const osModule = await OSModule.create({
       title: "Intro to Shell",
       description: "Learn basic shell commands",
-      type: "Practice",
+      type: "Observation",
       labType: "OSmodule",
       baseImage: "ubuntu:22.04",
       systemPackages: ["bash"],

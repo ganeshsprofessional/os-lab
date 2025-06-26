@@ -6,7 +6,11 @@ const baseModuleSchema = new mongoose.Schema(
   {
     title: { type: String, required: true },
     description: { type: String, required: true },
-    type: { type: String, required: true, enum: ["Practice", "Exam"] },
+    type: {
+      type: String,
+      required: true,
+      enum: ["Observation", "Execution", "Spot", "Exam"],
+    },
     labType: { type: String, enum: LABS.map((lab) => lab + "module") },
   },
   { timestamps: true, discriminatorKey: "labType" }

@@ -1,5 +1,5 @@
 import express from "express";
-import { Module } from "../../models/index.js";
+import { Module, OSModule } from "../../models/index.js";
 
 const router = express.Router();
 
@@ -8,7 +8,7 @@ router.post("/", async (req, res) => {
     const moduleData = req.body;
 
     // Create the module entry first to get an ID
-    const module = new Module({
+    const module = new OSModule({
       ...moduleData,
       status: "BUILDING",
     });
