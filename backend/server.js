@@ -5,12 +5,15 @@ import express from "express";
 import cors from "cors";
 import { WebSocketServer } from "ws";
 import url from "node:url";
+
 import connectDB from "./config/connectDB.js";
 import * as models from "./models/index.js";
 
 import authRoutes from "./routes/auth.js";
 import studentRoutes from "./routes/student.js";
 import teacherRoutes from "./routes/teacher.js";
+
+import moduleRoutes from "./OS/routes/moduleRoutes.js";
 
 import buildHandler from "./OS/wsHandlers/buildHandler.js";
 import studentHandler from "./OS/wsHandlers/studentHandler.js";
@@ -22,6 +25,7 @@ const INTERFACE = "0.0.0.0";
 
 const app = express();
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.use(
   cors({
@@ -37,6 +41,8 @@ app.use("/api/auth", authRoutes);
 app.use("/api/student", studentRoutes);
 app.use("/api/teacher", teacherRoutes);
 
+app.use("/api/os/modules", moduleRoutes);
+
 const server = app.listen(PORT, INTERFACE, async () => {
   await connectDB();
   console.log(`Server running on port ${PORT}`);
@@ -49,21 +55,21 @@ server.on("upgrade", (request, socket, head) => {
 
   if (pathname === "/os/build-status") {
     wss.handleUpgrade(request, socket, head, (ws) => {
-      wss.emit("connection:build", ws, request);
+      wss.emit("connection:os-build", ws, request);
     });
   } else if (pathname === "/os/student") {
     // Handle the OS student terminal connection
     wss.handleUpgrade(request, socket, head, (ws) => {
-      wss.emit("connection:student", ws, request);
+      wss.emit("connection:os-student", ws, request);
     });
   }
 });
 
 // Listener for OS module build status connections
-wss.on("connection:build", buildHandler);
+wss.on("connection:os-build", buildHandler);
 
 // Listener for OS student terminal connections
-wss.on("connection:student", studentHandler);
+wss.on("connection:os-student", studentHandler);
 
 process.on("SIGINT", () => {
   console.log("Shutting down server...");
