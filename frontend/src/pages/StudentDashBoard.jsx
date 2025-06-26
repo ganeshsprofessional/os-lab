@@ -1,4 +1,3 @@
-// pages/StudentDashboard.js
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import api from "../services/api";
@@ -12,9 +11,7 @@ const StudentDashboard = () => {
   useEffect(() => {
     const fetchLabs = async () => {
       try {
-        // The API endpoint depends on the role
-        const endpoint =
-          user.role === "student" ? "/student/labs" : "/teacher/labs";
+        const endpoint = "/student/labs";
         const { data } = await api.get(endpoint);
         setLabs(data);
       } catch (error) {

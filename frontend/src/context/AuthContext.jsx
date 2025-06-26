@@ -54,12 +54,7 @@ export const AuthProvider = ({ children }) => {
     navigate("/login");
   };
 
-  const checkAuth = async () => {
-    const res = await axios.get("/auth/check");
-    return res;
-  };
-
-  const value = { user, token, login, logout, loading, checkAuth };
+  const value = { user, token, login, logout, loading };
 
   return (
     <AuthContext.Provider value={value}>

@@ -2,22 +2,18 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { PlusIcon, BookOpenIcon, UsersIcon } from "@heroicons/react/24/solid";
 import api from "../services/api";
-import Spinner from "../components/ui/Spinner"; // A simple spinner component
+import Spinner from "../components/ui/Spinner";
 
 const TeacherDashboard = () => {
   const [labs, setLabs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  // This would be used to control a "Create Lab" modal
-  // const [isModalOpen, setIsModalOpen] = useState(false);
-
   useEffect(() => {
     const fetchLabs = async () => {
       setLoading(true);
       setError("");
       try {
-        // The API endpoint for teachers to get their labs
         const res = await api.get("/teacher/labs");
         console.log(res);
         setLabs(res.data);
@@ -30,7 +26,7 @@ const TeacherDashboard = () => {
     };
 
     fetchLabs();
-  }, []); // Empty dependency array ensures this runs only once on mount
+  }, []);
 
   const renderContent = () => {
     if (loading) {
@@ -55,16 +51,6 @@ const TeacherDashboard = () => {
           <p className="mt-1 text-sm text-gray-500">
             You have not been assigned to any labs yet.
           </p>
-          <div className="mt-6">
-            <button
-              type="button"
-              // onClick={() => setIsModalOpen(true)}
-              className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            >
-              <PlusIcon className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
-              Create New Lab
-            </button>
-          </div>
         </div>
       );
     }
@@ -80,7 +66,7 @@ const TeacherDashboard = () => {
             <div className="bg-white rounded-lg shadow-md p-6 h-full flex flex-col justify-between transition-all duration-300 group-hover:shadow-xl group-hover:-translate-y-1">
               <div>
                 <h2 className="text-xl font-bold text-gray-800 group-hover:text-indigo-600 transition-colors">
-                  {lab.course_id.title}
+                  {lab.lab_name}
                 </h2>
                 <p className="text-sm font-medium text-gray-500 mt-1">
                   {lab.course_id.code}
@@ -104,33 +90,9 @@ const TeacherDashboard = () => {
     <div>
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold text-gray-900">My Dashboard</h1>
-        {labs.length > 0 && (
-          <button
-            type="button"
-            // onClick={() => setIsModalOpen(true)}
-            className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-          >
-            <PlusIcon className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
-            Create New Lab
-          </button>
-        )}
       </div>
 
       {renderContent()}
-
-      {/* 
-            Future Implementation: A modal for creating a new lab
-            {isModalOpen && (
-                <CreateLabModal 
-                    isOpen={isModalOpen}
-                    onClose={() => setIsModalOpen(false)}
-                    onLabCreated={(newLab) => {
-                        setLabs(prevLabs => [...prevLabs, newLab]);
-                        setIsModalOpen(false);
-                    }}
-                />
-            )} 
-            */}
     </div>
   );
 };

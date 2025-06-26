@@ -1,26 +1,13 @@
 import { useState } from "react";
 import { useAuth } from "../hooks/useAuth";
 import { UserIcon, LockClosedIcon } from "@heroicons/react/24/solid";
-import { useEffect } from "react";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false); // Added for feedback during login
-  const { login, checkAuth } = useAuth();
-
-  useEffect(() => {
-    async function check() {
-      const res = await checkAuth();
-      if (res.status === 200) {
-        const data = res.data;
-        if (data.role === "student") navigate("/student/dashboard");
-        if (data.role === "teacher") navigate("/teacher/dashboard");
-      }
-    }
-    check();
-  }, []);
+  const { login } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -28,12 +15,10 @@ const Login = () => {
     setLoading(true);
     try {
       await login(username, password);
-      // The redirect will be handled by the AuthContext
     } catch (err) {
       setError(err.message || "An unexpected error occurred.");
       setLoading(false);
     }
-    // No need to set loading to false on success, as the component will unmount
   };
 
   return (
