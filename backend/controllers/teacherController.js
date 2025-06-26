@@ -1,6 +1,4 @@
-import Lab from "../models/Lab.js";
-import OSLab from "../models/OSLab.js";
-import OSModule from "../models/OSModule.js";
+import { Lab, OSLab, OSModule } from "../models/index.js";
 
 export const getMyLabs = async (req, res) => {
   const labs = await Lab.find({ teachers: req.user.id })

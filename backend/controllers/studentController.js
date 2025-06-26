@@ -1,5 +1,5 @@
 import LabEnrollment from "../models/LabEnrollment.js";
-import OSLab from "../models/OSLab.js";
+import { OSLab } from "../models/index.js";
 
 export const getMyLabs = async (req, res) => {
   try {

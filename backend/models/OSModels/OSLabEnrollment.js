@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import LabEnrollment from "./LabEnrollment.js";
+import LabEnrollment from "../LabEnrollment.js";
 
 const OSLabEnrollmentSchema = new mongoose.Schema({
   moduleProgress: [

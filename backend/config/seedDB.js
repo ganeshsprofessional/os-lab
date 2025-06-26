@@ -1,13 +1,15 @@
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 
-import User from "../models/User.js";
-import Course from "../models/Course.js";
-import Lab from "../models/Lab.js";
-import OSModule from "../models/OSModule.js";
-import Module from "../models/OSModule.js";
-import LabEnrollment from "../models/LabEnrollment.js";
-import OSLab from "../models/OSLab.js";
+import {
+  User,
+  Course,
+  Lab,
+  Module,
+  LabEnrollment,
+  OSLab,
+  OSModule,
+} from "../models/index.js";
 
 dotenv.config();
 
@@ -151,7 +153,6 @@ async function seedDB() {
     });
 
     osLab.modules = [osModule._id];
-    console.log(osLab);
     await osLab.save();
 
     console.log("Seeding complete!");

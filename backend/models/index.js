@@ -1,19 +1,8 @@
-import User from "./User.js";
-import Course from "./Course.js";
-import Lab from "./Lab.js";
-import Module from "./Module.js";
-import OSLab from "./OSLab.js";
-import OSModule from "./OSModule.js";
-import LabEnrollment from "./LabEnrollment.js";
-import OSLabEnrollment from "./OSLabEnrollment.js";
-
-export default {
-  User,
-  Course,
-  Lab,
-  Module,
-  OSLab,
-  OSModule,
-  LabEnrollment,
-  OSLabEnrollment,
-};
+export { default as User } from "./User.js";
+export { default as Course } from "./Course.js";
+export { default as Lab } from "./Lab.js";
+export { default as Module } from "./Module.js";
+export { default as LabEnrollment } from "./LabEnrollment.js";
+export { default as OSLab } from "./OSModels/OSLab.js";
+export { default as OSModule } from "./OSModels/OSModule.js";
+export { default as OSLabEnrollment } from "./OSModels/OSLabEnrollment.js";

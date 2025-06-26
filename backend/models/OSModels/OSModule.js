@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import Module from "./Module.js";
+import Module from "../Module.js";
 
 const OSInitialFileSchema = new mongoose.Schema(
   {
