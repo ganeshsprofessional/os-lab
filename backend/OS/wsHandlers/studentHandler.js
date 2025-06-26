@@ -1,6 +1,6 @@
-import { url } from "node:url";
+import url from "node:url";
 import { Module } from "../../models/index.js";
-import { sessionManager } from "../SessionManager";
+import { sessionManager } from "../SessionManager.js";
 
 export default async function studentHandler(ws, req) {
   console.log(req.url);
