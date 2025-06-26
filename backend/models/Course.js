@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
-import dotenv from "dotenv";
-dotenv.config();
+
 const LABS = process.env.LABS.trim().split(/\s+/);
 
 const courseSchema = new mongoose.Schema(

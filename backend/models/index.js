@@ -1,3 +1,6 @@
+import dotenv from "dotenv";
+dotenv.config();
+
 export { default as User } from "./User.js";
 export { default as Course } from "./Course.js";
 export { default as Lab } from "./Lab.js";
