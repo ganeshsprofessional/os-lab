@@ -36,6 +36,10 @@ const LabDetails = () => {
     { name: lab.lab_name, path: `/${user.role}/lab/${labId}` },
   ];
 
+  // const onAddModule = () => {
+  //   navigate("/teacher/");
+  // };
+
   // Helper to get status color
   const getStatusColor = (status) => {
     switch (status) {

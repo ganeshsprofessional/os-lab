@@ -1,6 +1,18 @@
 import mongoose from "mongoose";
 import LabEnrollment from "../LabEnrollment.js";
 
+const OSSubmissionSchema = new mongoose.Schema(
+  {
+    question_id: {
+      type: mongoose.Types.ObjectId,
+      required: true,
+      ref: "OSQuestion",
+    },
+    marksObtained: { type: Number, default: 0 },
+  },
+  { timestamps: true }
+);
+
 const OSLabEnrollmentSchema = new mongoose.Schema({
   moduleProgress: [
     {
@@ -14,6 +26,7 @@ const OSLabEnrollmentSchema = new mongoose.Schema({
         enum: ["not-started", "in-progress", "completed"],
         default: "not-started",
       },
+      submissions: [OSSubmissionSchema],
       marksObtained: { type: Number, default: 0 },
     },
   ],

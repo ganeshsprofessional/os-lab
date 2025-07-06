@@ -10,14 +10,14 @@ const baseLabSchema = new mongoose.Schema(
     semester: { type: Number },
     teachers: [{ type: mongoose.Types.ObjectId, ref: "User", required: true }],
     students: [{ type: mongoose.Types.ObjectId, ref: "User" }],
-    labType: { type: String, enum: LABS.map((lab) => lab + "lab") },
+    labType: { type: String, enum: LABS.map((lab) => lab + "Lab") },
   },
   { timestamps: true, discriminatorKey: "labType" } // Key to differentiate
 );
 
 baseLabSchema.pre("save", async function (next) {
   const course = await Course.findOne({ _id: this.course_id });
-  this.labType = course.labType + "lab";
+  this.labType = course.labType + "Lab";
   next();
 });
 
