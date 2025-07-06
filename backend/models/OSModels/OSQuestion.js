@@ -1,14 +1,6 @@
 import mongoose from "mongoose";
 import Question from "../Question";
 
-const OSInitialFileSchema = new mongoose.Schema(
-  {
-    name: { type: String, required: true }, // e.g., 'script.py'
-    content: { type: String, required: true },
-  },
-  { _id: false }
-);
-
 const OSValidatorSchema = new mongoose.Schema(
   {
     type: {

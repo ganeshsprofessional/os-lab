@@ -1,6 +1,14 @@
 import mongoose from "mongoose";
 import Module from "../Module.js";
 
+const OSInitialFileSchema = new mongoose.Schema(
+  {
+    name: { type: String, required: true }, // e.g., 'script.py'
+    content: { type: String, required: true },
+  },
+  { _id: false }
+);
+
 const OSModuleSchema = new mongoose.Schema(
   {
     baseImage: { type: String, required: true, default: "ubuntu:22.04" },

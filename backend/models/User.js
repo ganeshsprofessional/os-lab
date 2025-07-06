@@ -29,8 +29,7 @@ const userSchema = new mongoose.Schema(
 userSchema.pre("insertMany", async function (next, docs) {
   for (const doc of docs) {
     if (doc.password) {
-      const salt = await bcrypt.genSalt(SALT_ROUNDS);
-      doc.password = await bcrypt.hash(doc.password, salt);
+      doc.password = await bcrypt.hash(doc.password, SALT_ROUNDS);
     }
   }
   next();
@@ -38,8 +37,7 @@ userSchema.pre("insertMany", async function (next, docs) {
 
 userSchema.pre("save", async function (next) {
   if (this.isModified("password")) {
-    const salt = await bcrypt.genSalt(SALT_ROUNDS);
-    this.password = await bcrypt.hash(this.password, salt);
+    this.password = await bcrypt.hash(this.password, SALT_ROUNDS);
   }
   next();
 });
@@ -47,8 +45,7 @@ userSchema.pre("save", async function (next) {
 userSchema.pre("findOneAndUpdate", async function (next) {
   const update = this.getUpdate();
   if (update && update.password) {
-    const salt = await bcrypt.genSalt(SALT_ROUNDS);
-    update.password = await bcrypt.hash(update.password, salt);
+    update.password = await bcrypt.hash(update.password, SALT_ROUNDS);
     this.setUpdate(update);
   }
   next();
