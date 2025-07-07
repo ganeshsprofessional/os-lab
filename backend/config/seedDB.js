@@ -1,5 +1,5 @@
+import "../loadEnv.js";
 import mongoose from "mongoose";
-import dotenv from "dotenv";
 
 import {
   User,
@@ -10,8 +10,6 @@ import {
   OSLab,
   OSModule,
 } from "../models/index.js";
-
-dotenv.config();
 
 async function seedDB() {
   try {
@@ -131,7 +129,7 @@ async function seedDB() {
       title: "Intro to Shell",
       description: "Learn basic shell commands",
       type: "Observation",
-      labType: "OSmodule",
+      labType: "OSModule",
       baseImage: "ubuntu:22.04",
       systemPackages: ["bash"],
       initialFiles: [

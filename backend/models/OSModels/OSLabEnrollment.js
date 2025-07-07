@@ -33,6 +33,6 @@ const OSLabEnrollmentSchema = new mongoose.Schema({
 });
 
 export default LabEnrollment.discriminator(
-  "OSlabEnrollment",
+  "OSLabEnrollment",
   OSLabEnrollmentSchema
 );
